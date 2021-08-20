@@ -1853,6 +1853,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     "title": String,
@@ -1882,6 +1884,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -1889,18 +1895,50 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      item1: {
-        title: "Cheap Villa",
-        price: 100
-      }
+      bookables: null,
+      loading: false // columns: 2
+
     };
   },
+  // computed: {
+  //     rows(){
+  //         return this.bookables ? Math.ceil(this.bookables.length / this.columns) : 0;
+  //     }
+  // },
   created: function created() {
     var _this = this;
 
-    setTimeout(function () {
-      _this.item1.title = "Expensive Villa", _this.item1.price = 20000;
-    }, 3000);
+    this.loading = true; // setTimeout(() => {
+    //     this.bookables = [
+    //         {
+    //             title: "Expensive Villa",
+    //             content: "A Very Expensive Villa",
+    //             price: 20000
+    //         },
+    //         {
+    //             title: "Cheap Villa",
+    //             content: "A Very Cheap Villa",
+    //             price: 2500
+    //         },
+    //         {
+    //             title: "Standard Villa",
+    //             content: "A Standard Villa",
+    //             price: 5000
+    //         },
+    //         {
+    //             title: "Standard Villa 2",
+    //             content: "Standard Villa 2",
+    //             price: 7000
+    //         }
+    //     ];
+    // this.loading = false;
+    // }, 2000)
+
+    var request = axios.get("/laravue/public/api/bookables").then(function (response) {
+      _this.bookables = response.data;
+      _this.loading = false;
+    });
+    console.log(request);
   }
 });
 
@@ -37830,12 +37868,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(_vm.title))]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.content))]),
-    _vm._v(" "),
-    _c("span", [_vm._v(_vm._s(_vm.price))])
+  return _c("div", { staticClass: "card w-100 m-3 shadow border-0" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.content))]),
+      _vm._v(" "),
+      _c("span", [_vm._v("$" + _vm._s(_vm.price))])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -37861,23 +37901,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("bookable-item", {
-        attrs: {
-          title: _vm.item1.title,
-          content: "Content",
-          price: _vm.item1.price
-        }
-      }),
-      _vm._v(" "),
-      _c("bookable-item", {
-        attrs: { title: "Item 2", content: "Content 2", price: 1000 }
-      })
-    ],
-    1
-  )
+  return _c("div", [
+    _vm.loading
+      ? _c("div", [_vm._v("Data Loading...")])
+      : _c("div", [
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.bookables, function(bookable, index) {
+              return _c("bookable-item", {
+                key: index,
+                staticClass: "col-md-3",
+                attrs: {
+                  title: bookable.title,
+                  content: bookable.content,
+                  price: bookable.price
+                }
+              })
+            }),
+            1
+          )
+        ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
