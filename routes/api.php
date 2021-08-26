@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers as Controller;
 use App\Models\Bookable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/bookables', function (Request $request) {
-    return Bookable::all();
+Route::get('/bookables', function () {
+    return Bookable::latest()->get();
 });
+Route::post('/bookable/create', [Controller\BookableController::class, 'store']);

@@ -58,7 +58,7 @@ export default {
         // this.loading = false;
         // }, 2000)
 
-        const request = axios.get("/laravue/public/api/bookables").then(response => {
+        const request = axios.get("/api/bookables").then(response => {
             this.bookables = response.data;
             this.loading = false;
         });

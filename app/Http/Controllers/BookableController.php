@@ -35,7 +35,17 @@ class BookableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required|min:4|unique:bookables',
+            'content'=>'required',
+            'price'=>'required|numeric|gt:0',
+        ]);
+
+        $bookable = new Bookable();
+        $bookable->title = $request->title;
+        $bookable->content = $request->content;
+        $bookable->price = $request->price;
+        $bookable->save();
     }
 
     /**

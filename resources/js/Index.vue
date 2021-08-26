@@ -10,6 +10,9 @@
                     <li class="nav-item">
                         <router-link class="nav-link" :to="{ name: 'bookable' }">Bookables</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="{ name: 'bookable.create' }">Create Bookable</router-link>
+                    </li>
                 </ul>
             </div>
         </nav>
