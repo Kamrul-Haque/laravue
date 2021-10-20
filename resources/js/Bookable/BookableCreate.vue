@@ -81,7 +81,7 @@
 				content: "",
 				price: "",
 				errors: {},
-				message: ""
+				message: "",
 			};
 		},
 
@@ -98,8 +98,8 @@
 						this.message = "Created Successfully.";
 						//   this.$router.push('bookable')
 					})
-					.catch(errors => (this.errors = errors.response.data.errors));
-			}
-		}
+					.catch((errors) => (this.errors = errors.response.data.errors));
+			},
+		},
 	};
 </script>
